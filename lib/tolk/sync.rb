@@ -22,8 +22,8 @@ module Tolk
 
       def flat_hash(data, prefix = '', result = {})
         # vladCovaliov
-        array = [:active_admin, :date, :time, :support, :errors, :activerecord, :number, :datetime,
- :helpers, :meta_search, :flash, :will_paginate, :devise, :views, :faker]
+        array = [:active_admin, :date, :time, :support, :errors, :number, :datetime,
+ :helpers, :meta_search, :flash, :will_paginate, :views, :faker]
         data = data.select{|key,value| !array.include?(key)}
         data.each do |key, value|
           current_prefix = prefix.present? ? "#{prefix}.#{key}" : key
