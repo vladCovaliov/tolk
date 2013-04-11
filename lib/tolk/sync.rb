@@ -16,11 +16,15 @@ module Tolk
       end
 
       def read_primary_locale_file
-        primary_file = "#{self.locales_config_path}/#{self.primary_locale_name}.yml"
+        primary_file = "config/locales/en.yml"
         File.exists?(primary_file) ? flat_hash(YAML::safe_load(IO.read(primary_file))[self.primary_locale_name]) : {}
       end
 
       def flat_hash(data, prefix = '', result = {})
+        # vladCovaliov
+        array = [:active_admin, :date, :time, :support, :errors, :activerecord, :number, :datetime,
+ :helpers, :meta_search, :flash, :will_paginate, :devise, :views, :faker]
+        data = data.select{|key,value| !array.include?(key)}
         data.each do |key, value|
           current_prefix = prefix.present? ? "#{prefix}.#{key}" : key
 
@@ -30,7 +34,6 @@ module Tolk
             flat_hash(value, current_prefix, result)
           end
         end
-
         result.stringify_keys
       end
 
@@ -38,7 +41,6 @@ module Tolk
 
       def sync_phrases(translations)
         primary_locale = self.primary_locale
-
         # Handle deleted phrases
         translations.present? ? Tolk::Phrase.destroy_all(["tolk_phrases.key NOT IN (?)", translations.keys]) : Tolk::Phrase.destroy_all
 

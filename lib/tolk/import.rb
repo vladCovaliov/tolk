@@ -1,3 +1,4 @@
+require 'pry'
 module Tolk
   module Import
     def self.included(base)
@@ -50,7 +51,7 @@ module Tolk
     def read_locale_file
       locale_file = "#{self.locales_config_path}/#{self.name}.yml"
       raise "Locale file #{locale_file} does not exists" unless File.exists?(locale_file)
-
+      
       puts "[INFO] Reading #{locale_file} for locale #{self.name}"
       begin
         self.class.flat_hash(YAML::safe_load(IO.read(locale_file))[self.name])
