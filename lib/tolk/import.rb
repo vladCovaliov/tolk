@@ -1,4 +1,3 @@
-require 'pry'
 module Tolk
   module Import
     def self.included(base)
